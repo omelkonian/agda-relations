@@ -1,0 +1,24 @@
+name: CI
+on:
+  # schedule: [{cron: '0 0 * * *'}]
+  push:
+    paths:
+      - '**.agda'
+      - '*.agda-lib'
+      - '.github/workflows/**.yml'
+    branches: [main]
+  pull_request:
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: omelkonian/setup-agda@v2.3
+        with:
+          agda-version: 2.8.0
+          stdlib-version: 2.3
+          main: agda-relations
+          deploy: ${{ github.ref == 'refs/heads/master' }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ribbon: true
+          measure-typechecking: true

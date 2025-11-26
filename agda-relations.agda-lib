@@ -1,0 +1,6 @@
+name: agda-relations
+depend:
+  standard-library-2.3
+  standard-library-classes
+include: .
+flags: --safe
