@@ -1,8 +1,9 @@
+{-# OPTIONS --with-K #-}
 module agda-relations where
 
 -- ** Inference rules
-open import Relation.InferenceRules public
+open import Relation.InferenceRules
 
 -- ** Closures
-open import Class.HasInitial public
-open import Relation.Closures public
+open import Class.HasInitial
+open import Relation.Closure

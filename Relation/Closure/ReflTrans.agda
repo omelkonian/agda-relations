@@ -1,20 +1,19 @@
 open import Relation.Prelude
-open import Class.HasInitial
 open import Relation.InferenceRules
+open import Relation.Closure.Core
 
-module Relation.Closures {A : Type ℓ} (_—→_ : Rel A ℓ) where
-
-private variable s s′ s″ s↓ s↓′ : A
+module Relation.Closure.ReflTrans {A : Type ℓ} (_—→_ : Rel A ℓ) where
 
 -- left-biased
 infix  3 _∎
 infixr 2 _—→⟨_⟩_ _—↠⟨_⟩_
 infix  1 begin_; pattern begin_ x = x
-infix -1 _—↠_
-
+infix -1 _—↠_ _—↠⁺_
 data _—↠_ : Rel A ℓ where
   _∎ : ∀ x → x —↠ x
   _—→⟨_⟩_ : ∀ x → x —→ y → y —↠ z → x —↠ z
+data _—↠⁺_ : Rel A ℓ where
+  _—→⟨_⟩_ : ∀ x → x —→ y → y —↠ z → x —↠⁺ z
 
 pattern _—→⟨_∣_⟩_ x x→y y y→z = _—→⟨_⟩_ {y = y} x x→y y→z
 
@@ -57,7 +56,6 @@ _⟨_⟩↞—_ _ = ↞—-trans
   (_ ∎) → refl
   (_ ⟨ _ ⟩←— tr) → cong (_ ⟨ _ ⟩←—_) (↞—-trans-identityʳ tr)
 
-
 -- view correspondence
 infixr 2 _`—→⟨_⟩_
 _`—→⟨_⟩_ : ∀ x → y ←— x → z ↞— y → z ↞— x
@@ -79,6 +77,8 @@ viewRight (_ ⟨ st ⟩←— p) = _ `⟨ st ⟩←— viewRight p
 
 view↔ : (x —↠ y) ↔ (y ↞— x)
 view↔ = viewLeft , viewRight
+
+private variable s s′ s″ s↓ s↓′ : A
 
 open EqReasoning
 
@@ -319,15 +319,11 @@ StepPreservedSt P Q = StepPreserved′ (P ∩¹ Q) P
 
 -- ** well-rooted traces
 
+open import Class.HasInitial
+
 module _ ⦃ _ : HasInitial A ⦄ where
   Reachable : Pred A _
   Reachable s = ∃ λ s₀ → Initial s₀ × (s ↞— s₀)
-
-  Reachable-inj : ∀ {s s₀} {init init′ : Initial s₀}{tr tr′ : s ↞— s₀} →
-    ∙ _≡_ {A = Reachable s} (s₀ , init , tr) (s₀ , init′ , tr′)
-      ─────────────────────────────────────────────────────────
-      tr ≡ tr′
-  Reachable-inj refl = refl
 
   Invariant : Pred (Pred A ℓ) _
   Invariant = Reachable ⊆¹_

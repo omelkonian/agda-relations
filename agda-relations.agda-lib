@@ -3,4 +3,4 @@ depend:
   standard-library-2.3
   standard-library-classes
 include: .
-flags: --safe
+flags: --safe --without-K

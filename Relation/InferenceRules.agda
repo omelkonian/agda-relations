@@ -1,10 +1,6 @@
 module Relation.InferenceRules where
 
-open import Class.Prelude
-
--- iff
-_↔_ : Type ℓ → Type ℓ′ → Type (ℓ ⊔ ℓ′)
-A ↔ B = (A → B) × (B → A)
+open import Relation.Prelude
 
 -- syntax for inference rules (separating hypotheses from conclusion)
 infix -50
