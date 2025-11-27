@@ -20,7 +20,7 @@ jobs:
           libraries: |
             agda/agda-stdlib-classes#v2.3
           main: agda-relations
-          deploy: ${{ github.ref == 'refs/heads/master' }}
+          deploy: ${{ github.ref == 'refs/heads/main' }}
           token: ${{ secrets.GITHUB_TOKEN }}
           ribbon: true
           measure-typechecking: true
