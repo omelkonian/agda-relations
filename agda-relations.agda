@@ -7,3 +7,4 @@ open import Relation.InferenceRules
 -- ** Closures
 open import Class.HasInitial
 open import Relation.Closure
+open import Test.Relation.Closure
