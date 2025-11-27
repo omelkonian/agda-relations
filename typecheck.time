@@ -1,0 +1,12 @@
+TOTAL: 2m37s
+Relation/Prelude: 2m27s
+Relation/InferenceRules: 0m1s
+Class/HasInitial: 0m1s
+Relation/Closure/Core: 0m0s
+Relation/Closure/ReflTrans: 0m3s
+Relation/Closure/ReflTrans/WithK: 0m0s
+Relation/Closure/LReflTrans: 0m0s
+Relation/Closure/UpTo/ReflTrans: 0m1s
+Relation/Closure/UpTo/LReflTrans: 0m0s
+Relation/Closure: 0m0s
+agda-relations: 0m0s
