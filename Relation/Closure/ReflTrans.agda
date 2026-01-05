@@ -211,7 +211,9 @@ head≡ = λ where
   (_ ∎) → refl
   (_ ⟨ _ ⟩←— _) → refl
 
-open import Class.HasMembership
+open import Data.List.Membership.Propositional using (_∈_)
+open import Data.List.Membership.Propositional.Properties using (∈-++⁻)
+
 open import Function.Base using (_$′_)
 open import Data.List.Relation.Unary.Any using (here; there)
 
@@ -249,6 +251,18 @@ states-factor tr s₁∈ (here refl)
   = inj₁ ( subst (_↞— _) (sym $ head≡ tr) $ proj₂ $ split-by-state tr s₁∈)
 states-factor (_ ⟨ x ⟩←— tr) (there s₁∈) (there s₂∈) = states-factor tr s₁∈ s₂∈
 
+states-factor′ :  ∀ {s₀ s₁} →
+    (tr : s′ ↞— s) →
+    (tr₀ : s ↞— s₀) →
+    (let extTr = ↞—-trans tr tr₀) →
+  ∙ s₁ ∈ states extTr
+    ───────────────────────
+    s₁ ∈ states tr
+  ⊎ (s ↞— s₁)
+states-factor′ {s₁ = s₁} tr tr₀ s∈
+  with ∈-++⁻ (states tr) $ subst (s₁ ∈_) (states-↞— tr tr₀) s∈
+... | inj₁ s∈ˡ = inj₁ s∈ˡ
+... | inj₂ s∈ʳ = inj₂ $ split-by-state tr₀ (there s∈ʳ) .proj₂
 
 -- ** steps
 
